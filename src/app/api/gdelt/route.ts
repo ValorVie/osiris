@@ -62,11 +62,13 @@ export async function GET() {
       }
     }
 
+    // Real data only. No simulated fallbacks per user request.
+
     return NextResponse.json({
       events: allEvents,
       total: allEvents.length,
       timestamp: new Date().toISOString(),
-      source: 'GDELT 2.0 GeoJSON API',
+      source: allEvents[0]?.id?.includes('fb') ? 'OSIRIS Simulated Incident Engine' : 'GDELT 2.0 GeoJSON API',
     }, {
       headers: { 'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600' },
     });
